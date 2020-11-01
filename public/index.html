@@ -20,7 +20,7 @@
     <img src="bg.png"
      alt="Background image">
 
-    <div class="menu">
+    <nav class="menu">
         <ul>
             <!-- This is a Semantic HTML Change -->
             <time datetime="2020-09-25">September 25</time>
@@ -29,7 +29,7 @@
             <li><a href="/login.html">Login</a></li>
             <li><a href="https://google.com">Google</a></li>
         </ul>
-    </div>
+    </nav>
 
     <div class="hero">
          <!-- This is an A11y Change -->
@@ -57,7 +57,7 @@
                 <p>
                     What if your clothing budget ended? You will get an alert. The goal is to never go over the budget.
                 </p>
-                <img
+                
             
     
             <div class="text-box">
@@ -131,31 +131,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
     <script>
+        
         var dataSource = {
             datasets: [
                 {
                     data: [],
                     backgroundColor: [
-                        '#ffcd56', 
-                        '#ff6384', 
-                        '#36a2eb', 
-                        '#fd6b19', 
-                        '#39FF33', 
-                        '#e8ff33',
-                        '#8833FF',
+                        
                     ],
                 }
             ],
 
-                    
             labels: [
                         
             ]
         };
+    
 
-
-
-        function createChart(){
+        function createChart(dataSource){
             var ctx = document.getElementById("myChart").getContext("2d"); 
             var myPieChart = new Chart(ctx, {
                 type: 'pie', 
@@ -165,14 +158,14 @@
 
        
         function getBudget(){
-            axios.get('/budget')
+            axios.get("http://localhost:3000/budget")
             .then(function(res){
                 console.log(res);
                 for(var i = 0; i < res.data.myBudget.length; i++){
                     dataSource.datasets[0].data[i] = res.data.myBudget[i].budget; 
                     dataSource.labels[i] = res.data.myBudget[i].title;
                 }
-                createChart();
+                createChart(dataSource);
             });
         }
         
@@ -180,17 +173,11 @@
                 
         </script>
         <script>
+            
             var data = {
             datasets: [{
                 data: [], 
                 backgroundColor: [
-                        '#ffcd56', 
-                        '#ff6384', 
-                        '#36a2eb', 
-                        '#fd6b19', 
-                        '#39FF33', 
-                        '#e8ff33',
-                        '#8833FF',
 
                     ],
             }],
@@ -199,8 +186,9 @@
                 
             ]
         };
+        
 
-        function createGraph(){
+        function createGraph(data){
             var ctx = document.getElementById("canvas").getContext("2d"); 
             var myDoughnutChart = new Chart(ctx, {
                 type: 'doughnut',
@@ -210,14 +198,14 @@
         }
 
         function getUpdate(){
-            axios.get('/budget')
+            axios.get("http://localhost:3000/budget")
             .then(function(res){
                 console.log(res);
                 for(var i = 0; i < res.data.myBudget.length; i++){
                     data.datasets[0].data[i] = res.data.myBudget[i].budget; 
                     data.labels[i] = res.data.myBudget[i].title;
                 }
-                createGraph();
+                createGraph(data);
             });
         }
 
